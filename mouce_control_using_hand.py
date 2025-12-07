@@ -2,8 +2,8 @@ import cv2
 import mediapipe
 import pyautogui
 
-capture_hands = mediapipe.solutions.hands.Hands()
-drawing_option = mediapipe.solutions.drawing_utils
+CAPTURE_HANDS = mediapipe.solutions.hands.Hands()
+DRAWING_OPTIONS = mediapipe.solutions.drawing_utils
 
 camera = cv2.VideoCapture(0)
 x1, y1, x2, y2 = 0, 0, 0, 0
@@ -15,12 +15,13 @@ while True:
     # Conver theimage to a RGB image
     RGB_IMAGE = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    outpur_hands = capture_hands.process(RGB_IMAGE)
-    all_hands = outpur_hands.multi_hand_landmarks
-    if all_hands:
-        for hand in all_hands:
-            drawing_option.draw_landmarks(image, hand)
-            # Capturing the position of fingures
+    OUTPUT_HANDS = CAPTURE_HANDS.process(RGB_IMAGE)
+    ALL_HANDS = OUTPUT_HANDS.multi_hand_landmarks
+    if ALL_HANDS:
+        # Draw the landmarks and capture the position of fingers
+        for hand in ALL_HANDS:
+            DRAWING_OPTIONS.draw_landmarks(image, hand)
+            # Capturing the position of fingers
             one_hand_landmark = hand.landmark
             for id, lm in enumerate(one_hand_landmark):
                 height, width, _ = image.shape
